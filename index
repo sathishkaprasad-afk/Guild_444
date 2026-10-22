@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>444 GANG - Free Fire Esports Guild</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#FFD700',
+                            amber: '#F59E0B',
+                            red: '#EF4444',
+                            darkBg: '#09090B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #09090b;
+            color: #f3f4f6;
+        }
+        .heading-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(245, 158, 11, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-gray-100 min-h-screen flex flex-col bg-grid-pattern selection:bg-amber-500 selection:text-black">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-zinc-950/90 backdrop-blur-md border-b border-amber-500/20 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            
+            <!-- Guild Logo & Title (3-tap Secret Admin Trigger) -->
+            <div id="guildLogoBtn" onclick="handleLogoClick()" class="flex items-center gap-3 cursor-pointer select-none group" title="Triple tap for Admin Access">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl border border-amber-500/50 bg-gradient-to-br from-amber-500/20 to-zinc-900 flex items-center justify-center font-black text-amber-400 heading-font text-sm group-hover:scale-105 transition-transform duration-200 overflow-hidden shadow-md">
+                        <img id="displayLogoImg"
+                             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2318181b'/><path d='M20 80 L50 20 L80 80 Z' fill='none' stroke='%23f59e0b' stroke-width='8'/><text x='50' y='68' font-size='32' font-family='sans-serif' font-weight='900' fill='%23f59e0b' text-anchor='middle'>444</text></svg>" 
+                             alt="444 GANG Logo" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-amber-500 rounded-full border-2 border-zinc-950"></div>
+                </div>
+                <div>
+                    <h1 class="heading-font font-black text-lg leading-none tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-red-500">
+                        444 GANG
+                    </h1>
+                    <span class="text-[10px] text-amber-500/80 font-semibold tracking-widest block uppercase">FF Esports</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <!-- Inbox / Mail Button -->
+                <button onclick="openInboxModal()" class="relative p-2.5 rounded-xl bg-zinc-900 border border-amber-500/30 hover:border-amber-500/70 text-amber-400 hover:text-amber-300 transition-all duration-200 shadow-md">
+                    <i class="fas fa-envelope text-lg"></i>
+                    <span id="unreadBadge" class="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-zinc-950 hidden">0</span>
+                </button>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button onclick="toggleMobileMenu()" class="p-2.5 rounded-xl bg-zinc-900 border border-amber-500/30 text-amber-400 hover:text-amber-300">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE NAVIGATION DRAWER MENU -->
+    <div id="mobileDrawer" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition-opacity">
+        <div class="bg-zinc-900 border-b border-amber-500/30 p-6 max-w-sm w-full ml-auto h-full flex flex-col justify-between shadow-2xl">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-zinc-800 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg border border-amber-500/40 bg-zinc-950 flex items-center justify-center text-amber-400 font-bold heading-font text-xs">
+                            444
+                        </div>
+                        <span class="heading-font font-bold text-amber-400">NAVIGATION</span>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-3">
+                    <a href="#leaderboard" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl bg-zinc-800/50 hover:bg-amber-500/10 text-gray-200 hover:text-amber-400 transition-colors font-semibold">
+                        <i class="fas fa-trophy text-amber-400"></i>
+                        <span>Leaderboard</span>
+                    </a>
+                    <a href="#night-battles" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-3 rounded-xl bg-zinc-800/50 hover:bg-amber-500/10 text-gray-200 hover:text-amber-400 transition-colors font-semibold">
+                        <i class="fas fa-moon text-amber-400"></i>
+                        <span>Night Battles</span>
+                    </a>
+                    <!-- Admin Server Navigation Link -->
+                    <button type="button" onclick="openAdminServerFromMenu()" class="w-full flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-red-950/60 to-zinc-900 border border-red-500/30 text-red-400 hover:text-red-300 hover:bg-red-950/80 transition-colors font-semibold text-left cursor-pointer active:scale-95">
+                        <i class="fas fa-user-shield text-red-500"></i>
+                        <span>Admin Server</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="pt-6 border-t border-zinc-800 text-center text-xs text-gray-500">
+                Official 444 GANG Esports Platform
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
+
+        <!-- QUICK ACTION BATTLES BAR -->
+        <section class="space-y-4">
+            <h2 class="heading-font font-bold text-sm text-amber-500 tracking-widest uppercase flex items-center gap-2">
+                <i class="fas fa-fire"></i> Tournament Categories
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- NIGHT BATTLE BUTTON -->
+                <button onclick="scrollToNightBattles()" class="bg-gradient-to-r from-red-950/80 via-zinc-900 to-zinc-900 border border-red-500/40 hover:border-red-500 p-4 rounded-xl flex items-center justify-between text-left group transition-all duration-300 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-moon text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <div>
+                            <div class="heading-font font-bold text-white tracking-wider">NIGHT BATTLE</div>
+                            <div class="text-xs text-gray-400">Daily Free Tournaments</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-500 group-hover:text-red-500 transition-colors"></i>
+                </button>
+
+                <!-- PAID BATTLE BUTTON -->
+                <button onclick="openPaidBattleModal()" class="bg-gradient-to-r from-amber-950/80 via-zinc-900 to-zinc-900 border border-amber-500/40 hover:border-amber-500 p-4 rounded-xl flex items-center justify-between text-left group transition-all duration-300 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-coins text-amber-500 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <div>
+                            <div class="heading-font font-bold text-white tracking-wider">PAID BATTLE</div>
+                            <div class="text-xs text-gray-400">Official Group Direct Link</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-trophy text-amber-500/70 group-hover:text-amber-500 transition-colors"></i>
+                </button>
+
+                <!-- 444 GANG SPONSORED BATTLE BUTTON (Triggers Sinhala Notice) -->
+                <button onclick="showTournamentNotice()" class="bg-gradient-to-r from-yellow-950/80 via-zinc-900 to-zinc-900 border border-yellow-500/40 hover:border-yellow-400 p-4 rounded-xl flex items-center justify-between text-left group transition-all duration-300 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)]">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-gift text-yellow-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <div>
+                            <div class="heading-font font-bold text-yellow-400 tracking-wider">444 GANG</div>
+                            <div class="text-xs font-semibold text-gray-300">SPONSORED BATTLE</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-gem text-yellow-400/70 group-hover:text-yellow-400 transition-colors"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- NIGHT BATTLE SCHEDULE & REGISTRATION -->
+        <section id="night-battles" class="space-y-4">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                <h2 class="heading-font font-black text-xl text-white flex items-center gap-2">
+                    <i class="fas fa-bolt text-amber-400"></i> NIGHT BATTLES
+                </h2>
+                <span class="text-xs text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-full">Fast-Paced Matches</span>
+            </div>
+
+            <!-- Single Midnight Rumble Match Card -->
+            <div class="bg-zinc-900/90 border border-amber-500/30 rounded-2xl p-6 relative overflow-hidden shadow-xl hover:border-amber-500/60 transition-all">
+                <div class="absolute top-0 right-0 bg-amber-500 text-black heading-font font-bold text-xs px-4 py-1 rounded-bl-xl uppercase tracking-wider">
+                    Match #1
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="heading-font font-extrabold text-2xl text-white">MIDNIGHT RUMBLE</h3>
+                        <p class="text-sm text-amber-400 font-semibold mt-1 flex items-center gap-1">
+                            <i class="far fa-clock"></i> 11:00 PM Tonight
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-zinc-950/60 p-4 rounded-xl border border-zinc-800 text-sm">
+                        <div>
+                            <span class="text-xs text-gray-400 block">Slots Filled</span>
+                            <span id="slotsCountText" class="font-bold text-white">0 / 12 Squads</span>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 block">Prize Pool</span>
+                            <span class="font-bold text-emerald-400">Free Entry</span>
+                        </div>
+                        <div class="col-span-2 md:col-span-1">
+                            <span class="text-xs text-gray-400 block">Room Info</span>
+                            <span class="font-bold text-amber-400">Sent on WhatsApp</span>
+                        </div>
+                    </div>
+
+                    <button onclick="openRegisterModal()" class="w-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold py-3.5 px-6 rounded-xl heading-font text-base tracking-wider transition-all duration-200 shadow-lg shadow-amber-500/20 active:scale-[0.99]">
+                        JOIN MATCH #1
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALL OF FAME LEADERBOARD -->
+        <section id="leaderboard" class="space-y-6">
+            <div class="text-center space-y-1 mb-6">
+                <span class="text-xs font-bold text-amber-500 uppercase tracking-widest flex items-center justify-center gap-1">
+                    <i class="fas fa-star text-amber-400"></i> Hall of Fame
+                </span>
+                <h2 class="heading-font font-black text-2xl md:text-3xl text-white tracking-wide">
+                    TOP GUILD SQUADS
+                </h2>
+                <p class="text-xs text-gray-400">Official 444 GANG Free Fire Guild Leaderboard & Ranking Standings</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-amber-500/20 rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-zinc-950/80 border-b border-zinc-800 text-xs text-amber-400 font-bold heading-font uppercase">
+                                <th class="p-4">Rank</th>
+                                <th class="p-4">Squad Name</th>
+                                <th class="p-4">Leader IGN</th>
+                                <th class="p-4 text-right">Total Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardTbody" class="divide-y divide-zinc-800/60 text-sm font-semibold">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- GUILD LEADER PROFILE CARD -->
+            <div class="bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900 border border-amber-500/40 hover:border-amber-500 rounded-2xl p-6 shadow-2xl relative overflow-hidden transition-all duration-300">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-6 relative z-10 text-center sm:text-left">
+                    <div class="relative shrink-0">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-amber-500/70 bg-zinc-950 flex items-center justify-center text-amber-400 font-black heading-font text-2xl shadow-lg shadow-amber-500/10 overflow-hidden">
+                            <img id="displayLeaderImg"
+                                 src="https://i.postimg.cc/sXS7Pdhn/6633013e-fa5c-47ee-a464-5376887e7253.jpg"
+                                 alt="SUJEE 444"
+                                 class="w-full h-full object-cover"
+                                 loading="lazy"
+                                 referrerpolicy="no-referrer">
+                        </div>
+                        <span class="absolute -bottom-2 -right-2 bg-amber-500 text-black text-[10px] font-black heading-font px-2 py-0.5 rounded-md shadow-md uppercase">
+                            LEADER
+                        </span>
+                    </div>
+
+                    <div class="space-y-2 flex-1">
+                        <div>
+                            <div class="flex items-center justify-center sm:justify-start gap-2">
+                                <h3 class="heading-font font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">
+                                    SUJEE 444
+                                </h3>
+                                <i class="fas fa-check-circle text-amber-400 text-sm" title="Verified Guild Master"></i>
+                            </div>
+                            <span class="text-xs font-bold text-amber-500 tracking-widest uppercase heading-font block">
+                                GUILD LEADER & FOUNDER
+                            </span>
+                        </div>
+
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-xl">
+                            The backbone and visionary behind 444 GANG Esports. Responsible for managing guild operations, tournament sponsorships, roster decisions, and driving the guild toward competitive excellence.
+                        </p>
+
+                        <div class="pt-2 flex justify-center sm:justify-start">
+                            <a href="https://wa.me/82109923891" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold py-2 px-5 rounded-xl text-xs transition duration-300 transform hover:-translate-y-0.5 shadow-md flex items-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> Contact Leader (+82 10-9923-891)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GUILD ACTING LEADER PROFILE CARD (S4G 444) -->
+            <div class="bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900 border border-amber-500/40 hover:border-amber-500 rounded-2xl p-6 shadow-2xl relative overflow-hidden transition-all duration-300">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-6 relative z-10 text-center sm:text-left">
+                    <div class="relative shrink-0">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-amber-500/70 bg-zinc-950 flex items-center justify-center text-amber-400 font-black heading-font text-2xl shadow-lg shadow-amber-500/10 overflow-hidden">
+                            <img id="displayActingLeaderImg"
+                                 src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2318181b'/><circle cx='50' cy='35' r='20' fill='%23ef4444'/><path d='M20 90 C20 65 35 55 50 55 C65 55 80 65 80 90 Z' fill='%23ef4444'/><text x='50' y='38' font-size='12' font-weight='bold' fill='%23fff' text-anchor='middle'>S4G</text></svg>" 
+                                 alt="S4G 444" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <span class="absolute -bottom-2 -right-2 bg-amber-500 text-black text-[10px] font-black heading-font px-2 py-0.5 rounded-md shadow-md uppercase">
+                            ACTING LEADER
+                        </span>
+                    </div>
+
+                    <div class="space-y-2 flex-1">
+                        <div>
+                            <div class="flex items-center justify-center sm:justify-start gap-2">
+                                <h3 class="heading-font font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">
+                                    S4G 444
+                                </h3>
+                                <i class="fas fa-user-shield text-amber-400 text-sm" title="Verified Acting Leader"></i>
+                            </div>
+                            <span class="text-xs font-bold text-amber-500 tracking-widest uppercase heading-font block">
+                                GUILD ACTING LEADER
+                            </span>
+                        </div>
+
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-xl">
+                            ලීඩර්ගෙන් පසුව ගිල්ඩ් එකේ සියලුම වැඩකටයුතු, තරඟාවලි සම්බන්ධීකරණයන් සහ සියලු කළමනාකරණයන් සොයා බලමින් ගිල්ඩ් එක ඉදිරියට ගෙන යාමට කැපවී කටයුතු කරන්නේ මොහු විසිනි.
+                        </p>
+
+                        <div class="pt-2 flex justify-center sm:justify-start">
+                            <a href="https://wa.me/94712237687" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold py-2 px-5 rounded-xl text-xs transition duration-300 transform hover:-translate-y-0.5 shadow-md flex items-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> Contact Acting Leader (071 223 7687)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-zinc-900 bg-zinc-950 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 444 GANG Esports Guild. All rights reserved.</p>
+    </footer>
+
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- INBOX / MAIL SUBMISSIONS MODAL -->
+    <div id="inboxModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-amber-500/50 rounded-2xl max-w-md w-full p-6 shadow-2xl relative animate-fade-in flex flex-col max-h-[85vh]">
+            <button onclick="closeInboxModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800 shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg">
+                    <i class="fas fa-inbox"></i>
+                </div>
+                <div>
+                    <h3 class="heading-font font-bold text-lg text-white">Registered Squads</h3>
+                    <p class="text-xs text-amber-400">Public Live Tournament Inbox</p>
+                </div>
+            </div>
+
+            <!-- Inbox list container where registered squads render -->
+            <div id="inboxList" class="space-y-3 overflow-y-auto flex-1 pr-1">
+                <!-- Dynamically populated via updateUI() -->
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-zinc-800 text-center shrink-0">
+                <button onclick="closeInboxModal()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. TOURNAMENT NOTICE MODAL (SINHALA / ENGLISH) -->
+    <div id="noticeModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-amber-500/50 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative animate-fade-in">
+            <button onclick="closeTournamentNotice()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="w-16 h-16 bg-amber-500/10 border border-amber-500/30 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-400 text-2xl">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+
+            <h3 class="heading-font font-bold text-xl text-amber-400 mb-2">කණගාටුයි! (Notice)</h3>
+            <p class="text-gray-200 text-sm leading-relaxed mb-4">
+                අප විසින් මේ අවස්ථාවේ ක්‍රියාත්මක කරන ටූර්නමන්ට් එකක් නොමැති බැවින් අප දැනුම් දුන් පසු නැවත උත්සාහ කරන්න.
+            </p>
+            <p class="text-xs text-gray-400 mb-6 border-t border-zinc-800 pt-3">
+                Currently no active tournaments available. Please try again after our official announcement.
+            </p>
+
+            <button onclick="closeTournamentNotice()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold py-3 px-6 rounded-xl heading-font text-sm">
+                තේරුණා (OK)
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. SQUAD REGISTRATION MODAL -->
+    <div id="registerModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-amber-500/40 rounded-2xl max-w-md w-full p-6 shadow-2xl relative animate-fade-in">
+            <button onclick="closeRegisterModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-800">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <div>
+                    <h3 class="heading-font font-bold text-lg text-white">Squad Registration</h3>
+                    <p class="text-xs text-gray-400">Midnight Rumble (Match #1)</p>
+                </div>
+            </div>
+
+            <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Team Name / Squad Name *</label>
+                    <input type="text" id="regTeamName" required placeholder="e.g. 444 VANGUARD"
+                           class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Leader Name *</label>
+                    <input type="text" id="regLeaderName" required placeholder="e.g. SHADOW"
+                           class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Leader Free Fire UID *</label>
+                    <input type="text" id="regLeaderUid" required placeholder="e.g. 1234567890"
+                           class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Leader WhatsApp Number *</label>
+                    <input type="tel" id="regWhatsapp" required placeholder="e.g. 0771234567"
+                           class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold py-3.5 px-6 rounded-xl heading-font text-sm tracking-wider mt-2">
+                    SUBMIT & GET SLOT
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. SLOT ALLOCATED & WHATSAPP GROUP LINK POPUP -->
+    <div id="slotSuccessModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-emerald-500/50 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative animate-fade-in">
+            <button onclick="closeSlotSuccessModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-400 text-3xl">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <h3 class="heading-font font-bold text-xl text-white mb-1">Registration Successful!</h3>
+            <p class="text-xs text-gray-400 mb-4">Your squad submission has been recorded.</p>
+            <div id="allocatedSlotBadge" class="heading-font text-2xl font-black text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 py-2 px-4 rounded-xl mb-4">
+                SLOT #01
+            </div>
+
+            <button onclick="closeSlotSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 px-6 rounded-xl heading-font text-sm">
+                GREAT
+            </button>
+        </div>
+    </div>
+
+    <!-- 4. PAID BATTLE WHATSAPP GROUP LINK MODAL -->
+    <div id="paidBattleModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-amber-500/50 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative animate-fade-in">
+            <button onclick="closePaidBattleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="w-16 h-16 bg-amber-500/10 border border-amber-500/30 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-400 text-2xl">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+
+            <h3 class="heading-font font-bold text-xl text-amber-400 mb-2">PAID BATTLE GROUP</h3>
+            <p class="text-gray-300 text-xs mb-4">Click below to join our official Paid Battle WhatsApp group:</p>
+            
+            <a href="https://chat.whatsapp.com/DmWLeaRBNfLJodcDTjAJZ8?mode=gi_t" target="_blank" rel="noopener noreferrer" 
+               class="block w-full bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-extrabold py-3.5 px-6 rounded-xl heading-font text-sm tracking-wider shadow-lg shadow-emerald-600/20 mb-3">
+                <i class="fab fa-whatsapp mr-2 text-base"></i> JOIN WHATSAPP GROUP
+            </a>
+
+            <button onclick="closePaidBattleModal()" class="text-xs text-gray-400 hover:text-white underline">
+                Close Window
+            </button>
+        </div>
+    </div>
+
+    <!-- 6. ADMIN PASSWORD PROMPT MODAL -->
+    <div id="adminAuthModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-red-500/50 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative animate-fade-in text-center">
+            <button onclick="closeAdminAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="w-12 h-12 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center mx-auto mb-3 text-red-500 text-xl">
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <h3 class="heading-font font-bold text-lg text-white mb-1">ADMIN SERVER LOGIN</h3>
+            <p class="text-xs text-gray-400 mb-4">Enter master password to access server controls.</p>
+
+            <form onsubmit="verifyAdminPassword(event)" class="space-y-3">
+                <input type="password" id="adminPasswordInput" required placeholder="Enter Password"
+                       class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-center font-mono text-sm text-white focus:outline-none focus:border-red-500">
+                
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white font-extrabold py-3 px-6 rounded-xl heading-font text-xs tracking-wider">
+                    AUTHENTICATE
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 7. FULL ADMIN SERVER CONTROL PANEL (ACCESS WITH PASSWORD S4G_444) -->
+    <div id="adminDashboardModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-red-500/50 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative animate-fade-in flex flex-col max-h-[90vh]">
+            
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800 mb-4 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-600/20 border border-red-500/50 flex items-center justify-center text-red-500 font-bold">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h3 class="heading-font font-bold text-xl text-white">ADMIN SERVER CONTROL</h3>
+                        <p class="text-xs text-red-400 font-semibold">Authorized Access Unlocked</p>
+                    </div>
+                </div>
+                <button onclick="closeAdminDashboard()" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto space-y-6 pr-2">
+                
+                <!-- Section 0: Dynamic Image Management -->
+                <div class="space-y-3 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
+                    <h4 class="heading-font font-bold text-sm text-amber-400 flex items-center gap-2">
+                        <i class="fas fa-image"></i> WEBSITE IMAGES MANAGEMENT
+                    </h4>
+                    <form onsubmit="saveCustomImages(event)" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block text-gray-400 mb-1">Guild Logo Image URL:</label>
+                            <input type="url" id="adminLogoUrl" placeholder="https://example.com/logo.jpg" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 mb-1">Leader Image URL (SUJEE 444):</label>
+                            <input type="url" id="adminLeaderUrl" placeholder="https://example.com/leader.jpg" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 mb-1">Acting Leader Image URL (S4G 444):</label>
+                            <input type="url" id="adminActingLeaderUrl" placeholder="https://example.com/acting-leader.jpg" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="flex gap-2 pt-1">
+                            <button type="submit" class="flex-1 bg-amber-500 hover:bg-amber-400 text-black font-extrabold py-2 px-4 rounded-lg transition-colors">
+                                <i class="fas fa-save mr-1"></i> Save Image Changes
+                            </button>
+                            <button type="button" onclick="resetImagesToDefault()" class="bg-zinc-800 hover:bg-zinc-700 text-gray-300 font-bold py-2 px-4 rounded-lg transition-colors">
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Section A: Registrations Inbox Management -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="heading-font font-bold text-sm text-amber-400">REGISTRATION SUBMISSIONS</h4>
+                        <button onclick="clearAllMails()" class="bg-red-600/20 border border-red-500/50 hover:bg-red-600 text-red-400 hover:text-white text-xs font-bold py-1.5 px-3 rounded-lg transition-colors flex items-center gap-1.5">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Clear All Mails</span>
+                        </button>
+                    </div>
+
+                    <div id="adminInboxList" class="space-y-2">
+                        <!-- Items rendered dynamically with delete buttons -->
+                    </div>
+                </div>
+
+                <!-- Section B: Leaderboard Management -->
+                <div class="space-y-3 pt-4 border-t border-zinc-800">
+                    <h4 class="heading-font font-bold text-sm text-amber-400">LEADERBOARD MANAGEMENT</h4>
+                    
+                    <!-- Add Leaderboard Entry Form -->
+                    <form onsubmit="addLeaderboardEntry(event)" class="grid grid-cols-1 md:grid-cols-3 gap-2 bg-zinc-950 p-3 rounded-xl border border-zinc-800 text-xs">
+                        <input type="text" id="addSquadName" placeholder="Squad Name" required class="bg-zinc-900 border border-zinc-800 rounded-lg p-2 text-white focus:outline-none focus:border-amber-500">
+                        <input type="text" id="addLeaderIgn" placeholder="Leader IGN" required class="bg-zinc-900 border border-zinc-800 rounded-lg p-2 text-white focus:outline-none focus:border-amber-500">
+                        <div class="flex gap-2">
+                            <input type="number" id="addPoints" placeholder="Points" required class="bg-zinc-900 border border-zinc-800 rounded-lg p-2 text-white w-full focus:outline-none focus:border-amber-500">
+                            <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-black font-bold px-4 rounded-lg shrink-0">Add</button>
+                        </div>
+                    </form>
+
+                    <!-- Admin Leaderboard Table -->
+                    <div id="adminLeaderboardList" class="space-y-2">
+                        <!-- Leaderboard item controls -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // Data State Management
+        let logoClickCount = 0;
+        let logoClickTimer = null;
+
+        const defaultImages = {
+            logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2318181b'/><path d='M20 80 L50 20 L80 80 Z' fill='none' stroke='%23f59e0b' stroke-width='8'/><text x='50' y='68' font-size='32' font-family='sans-serif' font-weight='900' fill='%23f59e0b' text-anchor='middle'>444</text></svg>",
+            leader: "https://i.postimg.cc/sXS7Pdhn/6633013e-fa5c-47ee-a464-5376887e7253.jpg",
+            actingLeader: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2318181b'/><circle cx='50' cy='35' r='20' fill='%23ef4444'/><path d='M20 90 C20 65 35 55 50 55 C65 55 80 65 80 90 Z' fill='%23ef4444'/><text x='50' y='38' font-size='12' font-weight='bold' fill='%23fff' text-anchor='middle'>S4G</text></svg>"
+        };
+
+        function loadSavedObject(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return fallback;
+                const parsed = JSON.parse(raw);
+                return typeof parsed === 'object' && parsed !== null ? parsed : fallback;
+            } catch (error) {
+                console.warn(`Could not load saved data for ${key}; using defaults.`, error);
+                return fallback;
+            }
+        }
+
+        function loadSavedArray(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return fallback;
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : fallback;
+            } catch (error) {
+                console.warn(`Could not load saved data for ${key}; using defaults.`, error);
+                return fallback;
+            }
+        }
+
+        let customImages = loadSavedObject('444_custom_images', { ...defaultImages });
+
+        let registrations = loadSavedArray('444_registrations', [
+            { id: 1, teamName: "ALPHA SQUAD", leaderName: "ROYAL", leaderUid: "238491023", whatsapp: "0771234567", slot: 1, time: "20:15" },
+            { id: 2, teamName: "VIPER ESPORTS", leaderName: "VENOM", leaderUid: "883019284", whatsapp: "0719876543", slot: 2, time: "20:18" }
+        ]);
+
+        let leaderboardData = loadSavedArray('444_leaderboard', [
+            { id: 1, rank: 1, squadName: "444 VANGUARD", leaderIgn: "444 • SHADOW", points: 2850 },
+            { id: 2, rank: 2, squadName: "DARK SYNDICATE", leaderIgn: "DS • REAPER", points: 2420 },
+            { id: 3, rank: 3, squadName: "BLOODline", leaderIgn: "BLD • KAISER", points: 2180 },
+            { id: 4, rank: 4, squadName: "PHANTOM KINGS", leaderIgn: "PK • GHOST", points: 1950 }
+        ]);
+
+        // Save data helpers
+        function saveData() {
+            try {
+                localStorage.setItem('444_custom_images', JSON.stringify(customImages));
+                localStorage.setItem('444_registrations', JSON.stringify(registrations));
+                localStorage.setItem('444_leaderboard', JSON.stringify(leaderboardData));
+            } catch (error) {
+                console.warn('Could not save data in this browser.', error);
+                showCustomNotice('Storage Unavailable', 'Your browser could not save these changes.');
+            }
+            updateUI();
+        }
+
+        // Initialize UI
+        function updateUI() {
+            // Update Dynamic Images
+            const logoImg = document.getElementById('displayLogoImg');
+            if (logoImg) logoImg.src = customImages.logo || defaultImages.logo;
+
+            const leaderImg = document.getElementById('displayLeaderImg');
+            if (leaderImg) leaderImg.src = customImages.leader || defaultImages.leader;
+
+            const actingLeaderImg = document.getElementById('displayActingLeaderImg');
+            if (actingLeaderImg) actingLeaderImg.src = customImages.actingLeader || defaultImages.actingLeader;
+
+            // Sync Admin Form Inputs
+            const adminLogo = document.getElementById('adminLogoUrl');
+            if (adminLogo) adminLogo.value = customImages.logo || '';
+
+            const adminLeader = document.getElementById('adminLeaderUrl');
+            if (adminLeader) adminLeader.value = customImages.leader || '';
+
+            const adminActingLeader = document.getElementById('adminActingLeaderUrl');
+            if (adminActingLeader) adminActingLeader.value = customImages.actingLeader || '';
+
+            // Update Slots Count
+            const slotsText = document.getElementById('slotsCountText');
+            if (slotsText) {
+                slotsText.innerText = `${registrations.length} / 12 Squads`;
+            }
+
+            // Update Unread Badge
+            const badge = document.getElementById('unreadBadge');
+            if (badge) {
+                if (registrations.length > 0) {
+                    badge.innerText = registrations.length;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+
+            // Render Public Leaderboard
+            const lbTbody = document.getElementById('leaderboardTbody');
+            if (lbTbody) {
+                const sortedLb = [...leaderboardData].sort((a,b) => b.points - a.points);
+                lbTbody.innerHTML = sortedLb.map((item, idx) => `
+                    <tr class="hover:bg-zinc-800/30 transition-colors">
+                        <td class="p-4 font-extrabold text-amber-400">#${idx + 1}</td>
+                        <td class="p-4 text-white">${escapeHtml(item.squadName)}</td>
+                        <td class="p-4 text-gray-300">${escapeHtml(item.leaderIgn)}</td>
+                        <td class="p-4 text-right font-bold text-amber-400">${item.points.toLocaleString()}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Render Standard Public Inbox
+            const inboxList = document.getElementById('inboxList');
+            if (inboxList) {
+                if (registrations.length === 0) {
+                    inboxList.innerHTML = `<div class="text-center py-8 text-gray-500 text-xs"><i class="fas fa-box-open text-3xl mb-2 block"></i>No registrations submitted yet.</div>`;
+                } else {
+                    inboxList.innerHTML = registrations.map(r => `
+                        <div class="bg-zinc-950 border border-zinc-800 p-3.5 rounded-xl text-xs space-y-1 relative">
+                            <div class="flex items-center justify-between font-bold text-amber-400">
+                                <span>SLOT #${String(r.slot).padStart(2, '0')} - ${escapeHtml(r.teamName)}</span>
+                                <span class="text-[10px] text-gray-500">${r.time}</span>
+                            </div>
+                            <div class="text-gray-300">Leader: <span class="text-white">${escapeHtml(r.leaderName)}</span> | UID: <span class="text-white">${escapeHtml(r.leaderUid)}</span></div>
+                            <div class="text-emerald-400">WhatsApp: ${escapeHtml(r.whatsapp)}</div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Render Admin Dashboard Inbox
+            const adminInboxList = document.getElementById('adminInboxList');
+            if (adminInboxList) {
+                if (registrations.length === 0) {
+                    adminInboxList.innerHTML = `<div class="text-center py-4 text-gray-500 text-xs">No registrations found.</div>`;
+                } else {
+                    adminInboxList.innerHTML = registrations.map(r => `
+                        <div class="bg-zinc-950 border border-zinc-800 p-3 rounded-xl text-xs flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-amber-400">SLOT #${String(r.slot).padStart(2, '0')}</span> - 
+                                <span class="font-bold text-white">${escapeHtml(r.teamName)}</span> 
+                                <span class="text-gray-400">(${escapeHtml(r.leaderName)} / ${escapeHtml(r.whatsapp)})</span>
+                            </div>
+                            <button onclick="deleteRegistration(${r.id})" class="text-red-500 hover:text-red-400 p-1.5 hover:bg-red-500/10 rounded-lg transition-colors" title="Delete Entry">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Render Admin Leaderboard Control List
+            const adminLeaderboardList = document.getElementById('adminLeaderboardList');
+            if (adminLeaderboardList) {
+                adminLeaderboardList.innerHTML = leaderboardData.map((item, idx) => `
+                    <div class="bg-zinc-950 border border-zinc-800 p-2.5 rounded-xl text-xs flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-amber-400">#${idx + 1}</span>
+                            <span class="text-white font-semibold">${escapeHtml(item.squadName)}</span>
+                            <span class="text-gray-400">(${item.points} pts)</span>
+                        </div>
+                        <button onclick="deleteLeaderboardEntry(${item.id})" class="text-red-500 hover:text-red-400 p-1">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Custom Images Save Action
+        function saveCustomImages(e) {
+            e.preventDefault();
+            const logoVal = document.getElementById('adminLogoUrl').value.trim();
+            const leaderVal = document.getElementById('adminLeaderUrl').value.trim();
+            const actingLeaderVal = document.getElementById('adminActingLeaderUrl').value.trim();
+
+            customImages = {
+                logo: logoVal || defaultImages.logo,
+                leader: leaderVal || defaultImages.leader,
+                actingLeader: actingLeaderVal || defaultImages.actingLeader
+            };
+
+            saveData();
+            showCustomNotice('Success', 'Images updated successfully!');
+        }
+
+        function resetImagesToDefault() {
+            customImages = { ...defaultImages };
+            saveData();
+            showCustomNotice('Reset', 'Images restored to default settings.');
+        }
+
+        // 3-Tap Logo Secret Trigger for Admin Server Login
+        function handleLogoClick() {
+            logoClickCount++;
+            clearTimeout(logoClickTimer);
+            if (logoClickCount >= 3) {
+                logoClickCount = 0;
+                promptAdminAuth();
+            } else {
+                logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1000);
+            }
+        }
+
+        // Admin Password Prompt
+        function promptAdminAuth() {
+            const authModal = document.getElementById('adminAuthModal');
+            if (authModal) {
+                authModal.classList.remove('hidden');
+                setTimeout(() => {
+                    const passInput = document.getElementById('adminPasswordInput');
+                    if (passInput) passInput.focus();
+                }, 100);
+            }
+        }
+
+        function openAdminServerFromMenu() {
+            toggleMobileMenu();
+            setTimeout(() => {
+                promptAdminAuth();
+            }, 150);
+        }
+
+        function closeAdminAuthModal() {
+            document.getElementById('adminAuthModal').classList.add('hidden');
+            document.getElementById('adminPasswordInput').value = '';
+        }
+
+        function verifyAdminPassword(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === 'S4G_444') {
+                closeAdminAuthModal();
+                openAdminDashboard();
+            } else {
+                showCustomNotice('Access Denied', 'Incorrect Master Password!');
+            }
+        }
+
+        function openAdminDashboard() {
+            document.getElementById('adminDashboardModal').classList.remove('hidden');
+        }
+
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboardModal').classList.add('hidden');
+        }
+
+        // Registration Submission
+        function handleRegistration(e) {
+            e.preventDefault();
+            if (registrations.length >= 12) {
+                showCustomNotice('Match Full', 'Match slots are currently full (12/12)!');
+                return;
+            }
+
+            const allocatedSlot = registrations.length + 1;
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            const newReg = {
+                id: Date.now(),
+                teamName: document.getElementById('regTeamName').value,
+                leaderName: document.getElementById('regLeaderName').value,
+                leaderUid: document.getElementById('regLeaderUid').value,
+                whatsapp: document.getElementById('regWhatsapp').value,
+                slot: allocatedSlot,
+                time: timeStr
+            };
+
+            registrations.push(newReg);
+            saveData();
+
+            closeRegisterModal();
+            document.getElementById('regForm').reset();
+
+            // Display Allocated Slot
+            document.getElementById('allocatedSlotBadge').innerText = `SLOT #${String(allocatedSlot).padStart(2, '0')}`;
+            document.getElementById('slotSuccessModal').classList.remove('hidden');
+        }
+
+        // Delete Individual Registration (Admin Server Only)
+        function deleteRegistration(id) {
+            registrations = registrations.filter(r => r.id !== id);
+            registrations.forEach((r, idx) => r.slot = idx + 1);
+            saveData();
+        }
+
+        // Clear All Mails / Submissions
+        function clearAllMails() {
+            if (registrations.length === 0) return;
+            registrations = [];
+            saveData();
+        }
+
+        // Add Leaderboard Entry
+        function addLeaderboardEntry(e) {
+            e.preventDefault();
+            const newEntry = {
+                id: Date.now(),
+                rank: leaderboardData.length + 1,
+                squadName: document.getElementById('addSquadName').value,
+                leaderIgn: document.getElementById('addLeaderIgn').value,
+                points: Math.max(0, parseInt(document.getElementById('addPoints').value, 10) || 0)
+            };
+            leaderboardData.push(newEntry);
+            saveData();
+            document.getElementById('addSquadName').value = '';
+            document.getElementById('addLeaderIgn').value = '';
+            document.getElementById('addPoints').value = '';
+        }
+
+        function deleteLeaderboardEntry(id) {
+            leaderboardData = leaderboardData.filter(i => i.id !== id);
+            saveData();
+        }
+
+        // Modal Controls
+        function showTournamentNotice() {
+            document.getElementById('noticeModal').classList.remove('hidden');
+        }
+        function closeTournamentNotice() {
+            document.getElementById('noticeModal').classList.add('hidden');
+        }
+
+        function showCustomNotice(title, msg) {
+            alert(`${title}: ${msg}`);
+        }
+
+        function scrollToNightBattles() {
+            const el = document.getElementById('night-battles');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function openRegisterModal() {
+            document.getElementById('registerModal').classList.remove('hidden');
+        }
+        function closeRegisterModal() {
+            document.getElementById('registerModal').classList.add('hidden');
+        }
+
+        function closeSlotSuccessModal() {
+            document.getElementById('slotSuccessModal').classList.add('hidden');
+        }
+
+        function openPaidBattleModal() {
+            document.getElementById('paidBattleModal').classList.remove('hidden');
+        }
+        function closePaidBattleModal() {
+            document.getElementById('paidBattleModal').classList.add('hidden');
+        }
+
+        function openInboxModal() {
+            const modal = document.getElementById('inboxModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+        function closeInboxModal() {
+            const modal = document.getElementById('inboxModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobileDrawer');
+            if (drawer) {
+                drawer.classList.toggle('hidden');
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+            });
+        }
+
+        // Close open modals when clicking outside modal box
+        window.onclick = function(event) {
+            const modals = [
+                'noticeModal', 'registerModal', 'slotSuccessModal', 
+                'paidBattleModal', 'inboxModal', 'adminAuthModal', 'adminDashboardModal'
+            ];
+            modals.forEach(modalId => {
+                const el = document.getElementById(modalId);
+                if (el && event.target === el) {
+                    el.classList.add('hidden');
+                }
+            });
+        };
+
+        // Keyboard navigation (Escape key to close modals)
+        window.onkeydown = function(event) {
+            if (event.key === 'Escape') {
+                const modals = [
+                    'noticeModal', 'registerModal', 'slotSuccessModal', 
+                    'paidBattleModal', 'inboxModal', 'adminAuthModal', 'adminDashboardModal'
+                ];
+                modals.forEach(modalId => {
+                    const el = document.getElementById(modalId);
+                    if (el && !el.classList.contains('hidden')) {
+                        el.classList.add('hidden');
+                    }
+                });
+            }
+        };
+
+        // Run initial UI state
+        window.onload = function() {
+            updateUI();
+        };
+    </script>
+</body>
+</html>
